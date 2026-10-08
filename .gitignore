@@ -1,0 +1,15 @@
+# macOS
+.DS_Store
+.AppleDouble
+.LSOverride
+._*
+
+# Outils locaux (chemins absolus propres à la machine)
+.claude/
+
+# Sources client internes — ne pas publier sur un dépôt public
+contenu-ancien-site/
+
+# Divers
+*.log
+node_modules/
