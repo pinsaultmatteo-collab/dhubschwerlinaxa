@@ -1,9 +1,14 @@
 #!/usr/bin/env python3
-"""Assemble les pages de src/pages/ avec les partials de src/partials/ vers site/."""
+"""Assemble les pages de src/pages/ avec les partials de src/partials/ vers la racine du projet.
+
+Les pages construites (index.html, patrimoine.html, ...) et le dossier assets/ sont a la
+racine pour que n'importe quel hebergeur statique (Vercel, Netlify, GitHub Pages) les serve
+sans configuration. Ne pas editer les .html de la racine : ils sont ecrases a chaque build.
+"""
 import re, pathlib
 ROOT = pathlib.Path(__file__).parent
 PARTIALS = {p.stem: p.read_text(encoding="utf-8") for p in (ROOT / "src/partials").glob("*.html")}
-OUT = ROOT / "site"
+OUT = ROOT
 for page in sorted((ROOT / "src/pages").glob("*.html")):
     src = page.read_text(encoding="utf-8")
     meta = {}
