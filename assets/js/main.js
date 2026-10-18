@@ -50,6 +50,7 @@
       document.body.classList.remove('menu-open');
       lenis && lenis.start();
       scrollTo(el);
+      if (el.matches('.sector[data-expand]')) setTimeout(() => openSector(el, true), 350);
     });
   });
 
@@ -268,8 +269,8 @@
   const revealEl = (el) => {
     el.classList.add('is-revealed', 'is-in');
     if (el.hasAttribute('data-stagger')) Array.from(el.children).forEach((c, i) => (c.style.transitionDelay = `${i * 90}ms`));
-    const svg = el.matches('svg[data-draw]') ? el : $('svg[data-draw]', el);
-    if (svg && !svg.closest('.hero') && !svg.dataset.drawn) { svg.dataset.drawn = '1'; playDraw(svg, { dur: 1.4, stagger: 0.05 }); }
+    const svgs = el.matches('svg[data-draw]') ? [el] : $$('svg[data-draw]', el);
+    svgs.forEach((svg, i) => { if (!svg.closest('.hero') && !svg.dataset.drawn) { svg.dataset.drawn = '1'; playDraw(svg, { dur: 1.4, stagger: 0.05, delay: i * 0.15 }); } });
     if (el.classList.contains('risk__chart')) drawRisk(el);
   };
   const countEl = (el) => {
@@ -501,6 +502,57 @@
     segs.forEach((s) => s.addEventListener('mouseenter', () => set(s.dataset.key)));
     rows.forEach((r) => { r.addEventListener('mouseenter', () => set(r.dataset.key)); r.addEventListener('click', () => set(r.dataset.key)); });
     set(rows[0] && rows[0].dataset.key);
+  });
+
+  /* ---------- Secteurs dépliables (exemples d'activités) ---------- */
+  const openSector = (el, open) => {
+    const more = $('.sector__more', el); if (!more) return;
+    const willOpen = open === undefined ? !el.classList.contains('is-open') : open;
+    if (willOpen === el.classList.contains('is-open')) return;
+    el.classList.toggle('is-open', willOpen);
+    el.setAttribute('aria-expanded', String(willOpen));
+    if (willOpen) {
+      more.style.height = more.scrollHeight + 'px';
+      more.addEventListener('transitionend', function te() { if (el.classList.contains('is-open')) more.style.height = 'auto'; more.removeEventListener('transitionend', te); });
+    } else {
+      more.style.height = more.scrollHeight + 'px';
+      requestAnimationFrame(() => (more.style.height = '0px'));
+    }
+    setTimeout(() => hasST && ScrollTrigger.refresh(), 750);
+  };
+  $$('.sector[data-expand]').forEach((el) => {
+    el.setAttribute('role', 'button'); el.setAttribute('tabindex', '0'); el.setAttribute('aria-expanded', 'false');
+    el.addEventListener('click', (e) => { if (e.target.closest('a')) return; openSector(el); });
+    el.addEventListener('keydown', (e) => { if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); openSector(el); } });
+  });
+  const openFromHash = () => {
+    const id = location.hash.slice(1); if (!id) return;
+    const el = document.getElementById(id);
+    if (el && el.matches('.sector[data-expand]')) openSector(el, true);
+  };
+  window.addEventListener('load', () => { $$('.sector[data-open]').forEach((el) => openSector(el, true)); setTimeout(openFromHash, 400); });
+  window.addEventListener('hashchange', openFromHash);
+
+  /* ---------- Accompagnement 360° : synchronisation anneau / liste ---------- */
+  $$('.c360').forEach((root) => {
+    const items = $$('.c360__item', root), qs = $$('.q', root), labels = $$('.ql', root);
+    const set = (k) => {
+      items.forEach((i) => i.classList.toggle('is-active', i.dataset.q === k));
+      qs.forEach((q) => q.classList.toggle('is-active', q.dataset.q === k));
+      labels.forEach((l) => l.classList.toggle('is-active', l.dataset.q === k));
+    };
+    let timer = null;
+    const stop = () => { if (timer) { clearInterval(timer); timer = null; } };
+    items.forEach((i) => {
+      i.addEventListener('mouseenter', () => { if (finePointer) { stop(); set(i.dataset.q); } });
+      i.addEventListener('click', () => { stop(); set(i.dataset.q); });
+    });
+    qs.forEach((q) => q.addEventListener('mouseenter', () => { stop(); set(q.dataset.q); }));
+    set(items[0] && items[0].dataset.q);
+    if (!reduce && items.length > 1) {
+      let idx = 0;
+      timer = setInterval(() => { idx = (idx + 1) % items.length; set(items[idx].dataset.q); }, 2800);
+    }
   });
 
   /* ---------- Form ---------- */
