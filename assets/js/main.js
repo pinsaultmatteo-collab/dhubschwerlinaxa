@@ -446,8 +446,8 @@
   });
 
   /* ---------- Poles: redraw icon on hover ---------- */
-  $$('.pole').forEach((p) => {
-    const svg = $('svg', p);
+  $$('.pole, .axis').forEach((p) => {
+    const svg = $('svg[data-draw]', p) || $('svg', p);
     if (!svg) return;
     prepDraw(svg);
     p.addEventListener('mouseenter', () => playDraw(svg, { dur: 1.1, stagger: 0.03 }));

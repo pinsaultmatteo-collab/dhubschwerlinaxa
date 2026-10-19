@@ -632,16 +632,17 @@ body.menu-open .menu__links a:nth-child(5){transition-delay:.53s}
 .pstep__meta span{font-size:12px;color:var(--muted)}
 
 /* ---------- Risk donut ---------- */
-.risk{display:grid;grid-template-columns:1fr 1fr;gap:clamp(40px,6vw,100px);align-items:center}
-.risk__chart{position:relative;max-width:520px;margin-inline:auto;width:100%}
-.risk__chart svg{width:100%;height:auto;overflow:visible}
+.risk{display:grid;grid-template-columns:1.25fr 1fr;gap:clamp(32px,4.5vw,72px);align-items:center}
+.risk__chart{position:relative;width:100%;max-width:720px;margin-inline:auto;display:grid;grid-template-columns:auto minmax(0,1fr) auto;grid-template-areas:". n ." "w d e" ". s .";align-items:center;justify-items:center;gap:12px 14px}
+.risk__donut{grid-area:d;position:relative;width:100%;max-width:470px}
+.risk__donut svg{display:block;width:100%;height:auto;overflow:visible}
 .risk__chart .seg{fill:none;stroke-width:34;stroke-linecap:butt;transition:stroke-width .5s var(--ease),opacity .5s;cursor:pointer;opacity:.9}
 .risk__chart .seg:hover,.risk__chart .seg.is-active{stroke-width:44;opacity:1}
 .risk__chart .ring{fill:none;stroke:var(--line-dark);stroke-width:1}
 .risk__chart .lbl{font-family:var(--font-sans);font-size:10.5px;letter-spacing:.2em;font-weight:600;fill:rgba(244,239,230,.7);text-transform:uppercase}
 .risk__chart .lbl-arrow{fill:none;stroke:var(--gold-2);stroke-width:1.2;stroke-linecap:round;stroke-linejoin:round}
-.risk__center{position:absolute;inset:0;display:flex;flex-direction:column;align-items:center;justify-content:center;text-align:center;pointer-events:none;padding:0 29.5%}
-.risk__center b{font-family:var(--font-display);font-weight:400;font-size:clamp(22px,2.3vw,30px);line-height:1.1;display:block}
+.risk__center{position:absolute;inset:0;display:flex;flex-direction:column;align-items:center;justify-content:center;text-align:center;pointer-events:none;padding:0 29%}
+.risk__center b{font-family:var(--font-display);font-weight:400;font-size:clamp(20px,1.9vw,26px);line-height:1.1;display:block}
 .risk__center span{font-size:10.5px;letter-spacing:.14em;text-transform:uppercase;color:var(--gold-2);font-weight:600;display:block;margin-top:10px;line-height:1.5}
 .risk__legend{display:grid;gap:0;border-top:1px solid var(--line-dark)}
 .risk__row{display:grid;grid-template-columns:auto 1fr;gap:20px;padding:22px 0;border-bottom:1px solid var(--line-dark);cursor:pointer;transition:padding .4s var(--ease)}
@@ -1054,3 +1055,92 @@ body.menu-open .menu__links a:nth-child(5){transition-delay:.53s}
 .pillars--4{grid-template-columns:repeat(4,1fr)}
 @media (max-width:1100px){.pillars--4{grid-template-columns:1fr 1fr}}
 @media (max-width:820px){.pillars--4{grid-template-columns:1fr}}
+
+
+/* =========================================================
+   V4 — leviers du donut, axes illustrés, crédit agence
+   ========================================================= */
+
+/* ---------- Leviers autour du donut ---------- */
+.lever{display:flex;align-items:center;gap:10px;white-space:nowrap;font-size:11px;letter-spacing:.16em;text-transform:uppercase;font-weight:600;color:rgba(244,239,230,.9)}
+.lever b{font-weight:600}
+.lever--n{grid-area:n;flex-direction:column;gap:8px}
+.lever--s{grid-area:s;flex-direction:column;gap:8px}
+.lever--w{grid-area:w}
+.lever--e{grid-area:e}
+.lever__arrow{flex:none;fill:none;stroke:var(--gold-2);stroke-width:1.4;stroke-linecap:round;stroke-linejoin:round}
+.lever--w .lever__arrow,.lever--e .lever__arrow{width:26px;height:12px}
+.lever--n .lever__arrow,.lever--s .lever__arrow{width:12px;height:26px}
+.lever--w .lever__arrow{animation:nudgeR 2.4s var(--ease-io) infinite}
+.lever--e .lever__arrow{animation:nudgeL 2.4s var(--ease-io) infinite}
+.lever--n .lever__arrow{animation:nudgeD 2.4s var(--ease-io) infinite}
+.lever--s .lever__arrow{animation:nudgeU 2.4s var(--ease-io) infinite}
+@keyframes nudgeR{0%,100%{transform:translateX(0)}50%{transform:translateX(4px)}}
+@keyframes nudgeL{0%,100%{transform:translateX(0)}50%{transform:translateX(-4px)}}
+@keyframes nudgeD{0%,100%{transform:translateY(0)}50%{transform:translateY(4px)}}
+@keyframes nudgeU{0%,100%{transform:translateY(0)}50%{transform:translateY(-4px)}}
+
+/* ---------- Axes : cartes illustrées ---------- */
+.axes{display:grid;grid-template-columns:1fr 1fr;gap:clamp(16px,2vw,28px)}
+.axis{position:relative;display:grid;grid-template-rows:auto 1fr;border:1px solid var(--line);border-radius:16px;background:var(--paper);padding:12px;overflow:hidden;transition:transform .8s var(--ease),border-color .5s,opacity 1s var(--ease)}
+.axis:hover{transform:translateY(-6px);border-color:var(--gold)}
+.axis__art{position:relative;border-radius:10px;overflow:hidden;aspect-ratio:16/8.6;display:grid;place-items:center;background-color:var(--sand);background-image:linear-gradient(rgba(20,26,46,.07) 1px,transparent 1px),linear-gradient(90deg,rgba(20,26,46,.07) 1px,transparent 1px);background-size:24px 24px;background-position:-1px -1px}
+.axis__art svg{width:86%;height:auto;overflow:visible;margin-top:4%}
+.axis__num{position:absolute;left:18px;top:16px;font-size:11px;letter-spacing:.22em;text-transform:uppercase;font-weight:600;color:var(--gold-3)}
+.axis__big{position:absolute;right:20px;top:2px;font-family:var(--font-display);font-style:italic;font-size:clamp(56px,6vw,88px);line-height:1;color:rgba(20,26,46,.08);pointer-events:none}
+.axis__body{display:grid;gap:14px;align-content:start;padding:clamp(22px,2.6vw,34px) clamp(14px,2vw,24px) clamp(12px,1.4vw,18px)}
+.axis h3{font-size:clamp(32px,3.2vw,46px)}
+.axis__body > p{color:var(--text-2);font-size:15.5px;line-height:1.6;max-width:560px}
+.axis__tags{display:flex;flex-wrap:wrap;gap:8px;margin-top:2px}
+.axis__tags li{display:inline-flex;align-items:center;gap:8px;font-size:12.5px;font-weight:600;padding:9px 14px;border:1px solid var(--line-strong);border-radius:999px}
+.axis__tags li::before{content:"";width:6px;height:6px;border-radius:50%;background:var(--gold)}
+.axis .link{justify-self:start;margin-top:4px;color:var(--gold-3)}
+.axis .a-l{fill:none;stroke:var(--ink);stroke-width:1.4;stroke-linecap:round;stroke-linejoin:round}
+.axis .a-l2{fill:none;stroke:rgba(20,26,46,.5);stroke-width:1.1;stroke-linecap:round;stroke-linejoin:round}
+.axis .a-g{fill:none;stroke:var(--gold);stroke-width:1.6;stroke-linecap:round;stroke-linejoin:round}
+.axis .a-gf{fill:var(--gold)}
+.axis .a-tooth{fill:none;stroke:var(--ink);stroke-width:5;stroke-linecap:butt}
+.axis .a-t{font-family:var(--font-sans);font-size:8.5px;letter-spacing:.22em;font-weight:600;fill:var(--gold-3)}
+.axis .a-dash{stroke-dasharray:4 7;opacity:0;transition:opacity 1.2s var(--ease) .9s}
+.axis.is-revealed .a-dash{opacity:1}
+.axis--dark{background:var(--ink);color:var(--cream);border-color:var(--ink)}
+.axis--dark:hover{border-color:var(--gold)}
+.axis--dark .axis__art{background-color:rgba(244,239,230,.035);background-image:linear-gradient(rgba(244,239,230,.06) 1px,transparent 1px),linear-gradient(90deg,rgba(244,239,230,.06) 1px,transparent 1px)}
+.axis--dark .axis__num{color:var(--gold-2)}
+.axis--dark .axis__big{color:rgba(244,239,230,.07)}
+.axis--dark .axis__body > p{color:rgba(244,239,230,.72)}
+.axis--dark .axis__tags li{border-color:var(--line-dark-strong)}
+.axis--dark .link{color:var(--gold-2)}
+.axis--dark .a-l{stroke:rgba(244,239,230,.88)}
+.axis--dark .a-l2{stroke:rgba(244,239,230,.45)}
+.axis--dark .a-g{stroke:var(--gold-2)}
+.axis--dark .a-gf{fill:var(--gold-2)}
+.axis--dark .a-tooth{stroke:rgba(244,239,230,.88)}
+.axis--dark .a-t{fill:var(--gold-2)}
+
+/* ---------- Crédit agence (footer) ---------- */
+.credit{display:flex;align-items:center;justify-content:center;gap:18px;margin-top:32px;padding-top:28px;border-top:1px solid var(--line-dark);color:rgba(244,239,230,.62);transition:color .4s}
+.credit__label{font-size:11.5px;letter-spacing:.22em;text-transform:uppercase;font-weight:600}
+.credit picture{display:block;line-height:0}
+.credit__logo{display:block;height:40px;width:auto;opacity:.92;transition:opacity .4s,transform .6s var(--ease),filter .6s var(--ease)}
+.credit:hover{color:var(--cream)}
+.credit:hover .credit__logo{opacity:1;transform:translateY(-2px);filter:drop-shadow(0 6px 22px rgba(136,81,233,.5))}
+
+@media (max-width:1100px){
+  .risk__chart{max-width:640px}
+}
+@media (max-width:820px){
+  .axes{grid-template-columns:1fr}
+}
+@media (max-width:600px){
+  .risk__chart{gap:10px 8px}
+  .lever--w,.lever--e{flex-direction:column;gap:8px}
+  .lever--w b,.lever--e b{writing-mode:vertical-rl}
+  .lever--w b{transform:rotate(180deg)}
+  .credit{flex-direction:column;gap:12px}
+  .credit__logo{height:36px}
+}
+@media (prefers-reduced-motion:reduce){
+  .lever__arrow{animation:none!important}
+  .axis .a-dash{opacity:1}
+}

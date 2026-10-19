@@ -16,7 +16,7 @@ agence.html          L'agence : portrait et bio, 4 principes, agent général vs
 patrimoine.html      Pôle Patrimoine : genèse, solutions particuliers (accordéon), renvoi vers le pôle Particuliers,
                      dirigeants (11 solutions, panneau interactif), étapes, contact
 entreprise.html      Pôle Entreprise : positionnement assureur partenaire, schéma du risque (donut interactif),
-                     chaîne prévention → sinistralité → cotisations → rentabilité, 4 axes, 9 secteurs dépliables
+                     chaîne prévention → sinistralité → cotisations → rentabilité, 4 axes illustrés, 9 secteurs dépliables
                      avec exemples d'activités (transport : marchandises / voyageurs), méthode 5 étapes,
                      outil de prévention (Easy Pilote), avis, contact
 particuliers.html    Pôle Particuliers : approche, 6 assurances du quotidien (bento) + biens d'exception,
@@ -71,7 +71,8 @@ Le site fonctionne sans JS (contenu visible, sans animations) et respecte `prefe
 - [ ] **Formulaire** : actuellement sans backend (affiche un message de confirmation). Brancher sur Formspree,
       Netlify Forms, ou un script PHP `mail()` selon l'hébergeur.
 - [x] **Carte** : iframe Google Maps sur l'adresse de Cazères
-- [ ] **Lien PMC** dans le footer
+- [x] **Crédit PMC Marketing** en bas du footer : « Site conçu par » + logo (`assets/img/pmc-marketing.png` / `.webp`),
+      lien vers https://www.agence-pmc-marketing.com/
 
 ## Prévisualiser en local
 
