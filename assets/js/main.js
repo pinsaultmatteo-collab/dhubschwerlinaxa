@@ -201,8 +201,8 @@
   // active link
   const here = location.pathname.split('/').pop() || 'index.html';
   $$('.nav__links a, .menu__links a').forEach((a) => {
-    const href = a.getAttribute('href').split('#')[0];
-    if (href === here) a.classList.add('is-active');
+    const [page, hash] = a.getAttribute('href').split('#');
+    if (page === here && (!hash || location.hash === '#' + hash)) a.classList.add('is-active');
   });
 
   // mobile menu
@@ -263,7 +263,8 @@
   const pending = new Set($$(revealSel));
   $$('svg[data-draw]').forEach((svg) => { if (!svg.closest('.hero') && !svg.closest('.loader') && !svg.closest(revealSel)) pending.add(svg); });
   const counters = new Set($$('[data-count]'));
-  const growers = new Set($$('.timeline__line, .steps__line'));
+  const growers = new Set($$('.steps__line'));
+  const timelines = $$('.timeline, .vtl');
   const fmt = (n, dec) => n.toLocaleString('fr-FR', { minimumFractionDigits: dec, maximumFractionDigits: dec });
 
   const revealEl = (el) => {
@@ -325,6 +326,37 @@
       const mid = vh * 0.5; let idx = -1;
       levels.forEach((l, i) => { const r = l.getBoundingClientRect(); if (r.top < mid) idx = i; });
       if (idx >= 0) setLevel(idx);
+    }
+    timelines.forEach(updateTimeline);
+  };
+  /* frise : la ligne se remplit, le curseur avance et les étapes s'allument au fil du scroll */
+  const updateTimeline = (root) => {
+    const vertical = root.classList.contains('vtl');
+    const line = $(vertical ? '.vtl__line' : '.timeline__line', root);
+    const fill = line && $('i', line);
+    const cursor = $(vertical ? '.vtl__cursor' : '.timeline__cursor', root);
+    const items = $$(vertical ? '.vtl__item' : '.tl', root);
+    const r = root.getBoundingClientRect(), vh = innerHeight;
+    const horizontalMode = !vertical && line && getComputedStyle(line).display !== 'none';
+    if (vertical || horizontalMode) {
+      const trigger = vh * 0.72;
+      const span = vertical ? r.height : vh * 0.5;
+      const p = clamp((trigger - r.top) / span, 0, 1);
+      root.classList.toggle('is-live', p > 0.01 && p < 0.995);
+      if (vertical) {
+        const lr = line.getBoundingClientRect();
+        const lp = clamp((trigger - lr.top) / lr.height, 0, 1);
+        if (fill) fill.style.transform = `scaleY(${lp})`;
+        if (cursor) cursor.style.top = `calc(${getComputedStyle(root).getPropertyValue('--pad')} + 16px + ${(lp * lr.height).toFixed(1)}px)`;
+        items.forEach((it) => { const dotY = it.getBoundingClientRect().top + 16 + parseFloat(getComputedStyle(it).paddingTop); it.classList.toggle('is-lit', dotY <= trigger + 4); });
+      } else {
+        if (fill) fill.style.transform = `scaleX(${p})`;
+        if (cursor) cursor.style.left = `${(p * 100).toFixed(2)}%`;
+        items.forEach((it) => { const x = (it.getBoundingClientRect().left - r.left) / r.width; it.classList.toggle('is-lit', x <= p + 0.002); });
+      }
+    } else {
+      // mobile : la ligne horizontale est masquée, chaque étape s'allume en entrant dans l'écran
+      items.forEach((it) => it.classList.toggle('is-lit', it.getBoundingClientRect().top < vh * 0.82));
     }
   };
   const queueCheck = () => { if (!checkQueued) { checkQueued = true; requestAnimationFrame(check); } };
@@ -553,6 +585,46 @@
       let idx = 0;
       timer = setInterval(() => { idx = (idx + 1) % items.length; set(items[idx].dataset.q); }, 2800);
     }
+  });
+
+  /* ---------- Carrousel d'avis ---------- */
+  $$('[data-carousel]').forEach((root) => {
+    const track = $('.quotes', root), prev = $('[data-prev]', root), next = $('[data-next]', root);
+    if (!track || !prev || !next) return;
+    const cards = () => $$('.quote', track);
+    // pas réel entre deux cartes, mesuré dans le DOM (indépendant du CSS)
+    const pitch = () => { const c = cards(); return c.length > 1 ? c[1].offsetLeft - c[0].offsetLeft : track.clientWidth; };
+    const maxLeft = () => Math.max(0, track.scrollWidth - track.clientWidth);
+    const update = () => {
+      prev.disabled = track.scrollLeft <= 2;
+      next.disabled = track.scrollLeft >= maxLeft() - 2;
+    };
+    // tween maison : fiable partout, et le scroll-snap recale sur la carte à l'arrivée
+    let raf = null, animating = false, target = null;
+    const animate = (to) => {
+      if (raf) cancelAnimationFrame(raf);
+      const from = track.scrollLeft, dist = to - from, t0 = performance.now(), dur = reduce ? 0 : 620;
+      animating = true;
+      const tick = (t) => {
+        const p = dur ? clamp((t - t0) / dur, 0, 1) : 1, e = 1 - Math.pow(1 - p, 3);
+        track.scrollLeft = from + dist * e;
+        if (p < 1) raf = requestAnimationFrame(tick); else { raf = null; animating = false; update(); }
+      };
+      raf = requestAnimationFrame(tick);
+    };
+    // les clics rapides s'additionnent sur un index cible ; un scroll manuel (doigt, molette) le réinitialise
+    const go = (dir) => {
+      const st = pitch(), last = Math.ceil(maxLeft() / st);
+      const base = target === null ? Math.round(track.scrollLeft / st) : target;
+      target = clamp(base + dir, 0, last);
+      animate(Math.min(target * st, maxLeft()));
+    };
+    prev.addEventListener('click', () => go(-1));
+    next.addEventListener('click', () => go(1));
+    track.addEventListener('scroll', () => { if (!animating) target = null; update(); }, { passive: true });
+    window.addEventListener('resize', update);
+    window.addEventListener('load', update);
+    update();
   });
 
   /* ---------- Form ---------- */

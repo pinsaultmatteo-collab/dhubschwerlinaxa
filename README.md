@@ -8,9 +8,11 @@ Les pages construites sont **à la racine du dépôt**, pour que n'importe quel 
 (Vercel, Netlify, GitHub Pages, Cloudflare Pages) les serve sans configuration.
 
 ```
-index.html           Accueil : hero blueprint, trois pôles, accompagnement 360° (anneau interactif), manifeste,
-                     chiffres, méthode 3 niveaux, expertises (défilement horizontal), l'agence, parcours
-                     2012→aujourd'hui, avis, contact
+index.html           Accueil : hero photo + blueprint, trois pôles, accompagnement 360° (anneau interactif),
+                     manifeste, chiffres, méthode 3 niveaux, expertises (défilement horizontal), l'agence,
+                     frise 2012→aujourd'hui animée au scroll, avis (carrousel + lien Google), contact
+agence.html          L'agence : portrait et bio, 4 principes, agent général vs courtier, frise verticale animée,
+                     chiffres, infos pratiques (adresse, horaires, avis Google)
 patrimoine.html      Pôle Patrimoine : genèse, solutions particuliers (accordéon), renvoi vers le pôle Particuliers,
                      dirigeants (11 solutions, panneau interactif), étapes, contact
 entreprise.html      Pôle Entreprise : positionnement assureur partenaire, schéma du risque (donut interactif),
@@ -19,7 +21,7 @@ entreprise.html      Pôle Entreprise : positionnement assureur partenaire, sch�
                      outil de prévention (Easy Pilote), avis, contact
 particuliers.html    Pôle Particuliers : approche, 6 assurances du quotidien (bento) + biens d'exception,
                      étapes, avis, contact
-contact.html         Formulaire, coordonnées, carte, agences
+contact.html         Formulaire, coordonnées, carte (32 av. Pasteur, Cazères), rendez-vous à domicile
 assets/css/main.css  Design system (tokens couleurs / typo / composants / responsive)
 assets/js/main.js    Animations : preloader, curseur, scroll fluide (Lenis), GSAP ScrollTrigger,
                      dessin des SVG au scroll, compteurs, section épinglée, accordéons, donut, etc.
@@ -44,17 +46,22 @@ Le site fonctionne sans JS (contenu visible, sans animations) et respecte `prefe
 
 ## À compléter avant mise en ligne (placeholders)
 
-- [ ] **Téléphone** : `05 61 00 00 00` (nav mobile, CTA, footer, contact)
+- [x] **Téléphone** : `05 31 61 42 80` (fiche Google de l'agence)
 - [ ] **Email** : `david.hubschwerlin@axa.fr` (à confirmer)
-- [ ] **Adresses** : reprises de l'ancien site (10 route d'Espagne Toulouse, 23 rue Jean Jaurès Carbonne) — à valider
-- [ ] **Horaires** (contact.html, CTA accueil)
+- [x] **Adresse** : 32 avenue Pasteur, Local n°5, 31220 Cazères (fiche Google). Les anciennes adresses WH ont été retirées
+- [ ] **Horaires** : « 9h30 – 12h30 / 14h – 18h » (ouverture 9h30 d'après Google, fermeture à confirmer)
+- [ ] **Photo du hero (accueil)** : façade classique illuminée, Unsplash (licence libre, photo-1763142106308-07cc683cecfd),
+      chargée depuis le CDN Unsplash. Pour la production : télécharger le fichier dans `assets/img/hero.jpg`
+      (ou remplacer par une vraie photo de l'agence / de Toulouse) et mettre à jour `src/pages/index.html`
+- [ ] **Bloc avis** : note 4,2 et 21 avis saisis en dur (fiche Google au 19/10/2026) ; les 6 avis de chaque carrousel sont des
+      placeholders à remplacer par de vrais avis Google. Le lien ouvre la fiche via une recherche Maps
 - [ ] **N° ORIAS** agent général + courtage (footer, mention légale obligatoire)
 - [x] **Photo portrait** de David intégrée (bloc « L'agence » de index.html) — `assets/img/david-hubschwerlin.jpg` + `.webp`
 - [ ] **Photo portrait haute résolution** : le fichier fourni fait 467 × 484 px. Il est net sur mobile mais légèrement
       adouci sur grand écran et sur écran Retina. Idéalement fournir l'original en **1200 px de large minimum**,
       cadrage vertical (portrait). Remplacer les deux fichiers et régénérer le WebP :
       `cwebp -q 88 assets/img/david-hubschwerlin.jpg -o assets/img/david-hubschwerlin.webp`
-- [ ] **Témoignages** : ceux de l'ancien site sont conservés / adaptés, à remplacer par de vrais avis
+- [ ] **Témoignages** : voir « Bloc avis » ci-dessus
 - [x] **Chiffres clés** validés par David le 18/10/2026 : +1 500 clients, 94 % de satisfaction. Restent +30 ans d'expérience
       et +50 secteurs (repris de l'ancien site) : à confirmer, sachant que l'activité d'agent général date de 2012
 - [x] **Historique** : « depuis 2012 » partout (corrigé le 18/10/2026). Timeline 2012 → 2015 → 2021 → 2024 → aujourd'hui,
@@ -63,7 +70,7 @@ Le site fonctionne sans JS (contenu visible, sans animations) et respecte `prefe
 - [ ] **Pages légales** : mentions légales + politique de confidentialité (liens `#` dans le footer)
 - [ ] **Formulaire** : actuellement sans backend (affiche un message de confirmation). Brancher sur Formspree,
       Netlify Forms, ou un script PHP `mail()` selon l'hébergeur.
-- [ ] **Carte** : iframe Google Maps sur l'adresse de Toulouse
+- [x] **Carte** : iframe Google Maps sur l'adresse de Cazères
 - [ ] **Lien PMC** dans le footer
 
 ## Prévisualiser en local

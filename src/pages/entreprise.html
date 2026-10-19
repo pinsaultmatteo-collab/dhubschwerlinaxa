@@ -97,6 +97,7 @@ desc: Agent général AXA et courtier : programmes d'assurance sur mesure et mé
         <svg viewBox="0 0 520 520">
           <circle class="ring" cx="260" cy="260" r="236"/>
           <circle class="ring" cx="260" cy="260" r="128"/>
+          <circle cx="260" cy="260" r="118" fill="#0A1128"/>
           <!-- segments : circonférence r=182 ≈ 1143.5 -->
           <circle class="seg" data-key="conserves" cx="260" cy="260" r="182" stroke="#E2C88E" data-len="343" transform="rotate(-90 260 260)"/>
           <circle class="seg" data-key="transferes" cx="260" cy="260" r="182" stroke="#F4EFE6" data-len="686" transform="rotate(18 260 260)"/>
@@ -107,19 +108,19 @@ desc: Agent général AXA et courtier : programmes d'assurance sur mesure et mé
           <text class="lbl" x="12" y="264">Recrutement</text><path class="lbl-arrow" d="M14 276h34M42 270l6 6-6 6"/>
           <text class="lbl" x="508" y="264" text-anchor="end">Prévention</text><path class="lbl-arrow" d="M506 276h-34M478 270l-6 6 6 6"/>
         </svg>
-        <div class="risk__center"><b>Coûts conservés</b><span>≈ 30 %</span></div>
+        <div class="risk__center"><b>Coûts conservés</b><span>Part visible</span></div>
       </div>
       <div>
         <div class="risk__legend" data-reveal="none">
-          <div class="risk__row is-active" data-key="conserves" data-short="Coûts conservés" data-pct="Part visible · à votre charge">
+          <div class="risk__row is-active" data-key="conserves" data-short="Coûts conservés" data-pct="Part visible">
             <i style="background:#E2C88E"></i>
             <div><h3>01 · Coûts conservés</h3><p>Franchises, garanties non souscrites, négociations amiables. Ce que l'entreprise assume seule, souvent sans l'avoir décidé.</p></div>
           </div>
-          <div class="risk__row" data-key="transferes" data-short="Coûts transférés" data-pct="Part assurée · financée">
+          <div class="risk__row" data-key="transferes" data-short="Coûts transférés" data-pct="Part assurée">
             <i style="background:#F4EFE6"></i>
             <div><h3>02 · Coûts transférés</h3><p>Primes d'assurance, financements bancaires, contrats de maintenance. Ce que vous confiez à des tiers, à un prix qu'il faut savoir négocier.</p></div>
           </div>
-          <div class="risk__row" data-key="nonmaitrises" data-short="Risques non maîtrisés" data-pct="Part invisible · à réduire">
+          <div class="risk__row" data-key="nonmaitrises" data-short="Risques non maîtrisés" data-pct="Part invisible">
             <i style="background:#C5A25A"></i>
             <div><h3>03 · Risques non maîtrisés</h3><p>Les angles morts : ce qui n'est ni assuré ni provisionné. C'est là que se jouent la continuité de l'activité et le patrimoine du dirigeant.</p></div>
           </div>
@@ -387,17 +388,29 @@ desc: Agent général AXA et courtier : programmes d'assurance sur mesure et mé
 </section>
 
 <!-- ================= TÉMOIGNAGES ================= -->
-<section class="section paper" data-theme="light">
+<section class="section paper" data-theme="light" data-carousel>
   <div class="container">
-    <header class="section-head section-head--center" data-reveal>
-      <p class="eyebrow eyebrow--plain">Ils nous font confiance</p>
-      <h2>Des dirigeants <em>qui en parlent.</em></h2>
-    </header>
+    <div class="reviews__head">
+      <div data-reveal>
+        <p class="eyebrow">Ils nous font confiance</p>
+        <h2 style="margin-top:18px">Des dirigeants <em>qui en parlent.</em></h2>
+      </div>
+      <div class="reviews__ctrl" data-reveal>
+        <a class="gbadge" href="https://www.google.com/maps/search/?api=1&query=AXA+Assurance+et+Banque+David+Hubschwerlin+32+avenue+Pasteur+31220+Caz%C3%A8res" target="_blank" rel="noopener" aria-label="Voir les avis Google de l'agence"><svg class="gbadge__g" viewBox="0 0 48 48" aria-hidden="true"><path fill="#EA4335" d="M24 9.5c3.54 0 6.71 1.22 9.21 3.6l6.85-6.85C35.9 2.38 30.47 0 24 0 14.62 0 6.51 5.38 2.56 13.22l7.98 6.19C12.43 13.72 17.74 9.5 24 9.5z"/><path fill="#4285F4" d="M46.98 24.55c0-1.57-.15-3.09-.38-4.55H24v9.02h12.94c-.58 2.96-2.26 5.48-4.78 7.18l7.73 6c4.51-4.18 7.09-10.36 7.09-17.65z"/><path fill="#FBBC05" d="M10.53 28.59c-.48-1.45-.76-2.99-.76-4.59s.27-3.14.76-4.59l-7.98-6.19C.92 16.46 0 20.12 0 24c0 3.88.92 7.54 2.56 10.78l7.97-6.19z"/><path fill="#34A853" d="M24 48c6.48 0 11.93-2.13 15.89-5.81l-7.73-6c-2.15 1.45-4.92 2.3-8.16 2.3-6.26 0-11.57-4.22-13.47-9.91l-7.98 6.19C6.51 42.62 14.62 48 24 48z"/></svg><span><b>4,2</b> <span class="gbadge__stars">★★★★☆</span> <small>· 21 avis Google</small></span></a>
+        <button class="reviews__btn" type="button" data-prev aria-label="Avis précédents"><svg viewBox="0 0 16 16"><path d="M14 8H3M7 4L3 8l4 4"/></svg></button>
+        <button class="reviews__btn" type="button" data-next aria-label="Avis suivants"><svg viewBox="0 0 16 16"><path d="M2 8h11M9 4l4 4-4 4"/></svg></button>
+      </div>
+    </div>
     <div class="quotes">
       <figure class="quote">
         <div class="quote__mark">“</div>
         <p>Un programme d'assurance enfin lisible. Nous savons ce que nous payons, pourquoi, et ce que nous gardons à notre charge.</p>
         <figcaption class="quote__who"><i>C</i><div><b>Cédric D.</b><span>Gérant, transport routier</span></div></figcaption>
+      </figure>
+      <figure class="quote">
+        <div class="quote__mark">“</div>
+        <p>Le plan de prévention a changé la culture sécurité de nos chauffeurs. Les chiffres ont suivi, et les cotisations aussi.</p>
+        <figcaption class="quote__who"><i>K</i><div><b>Karim B.</b><span>Gérant, transport de voyageurs</span></div></figcaption>
       </figure>
       <figure class="quote">
         <div class="quote__mark">“</div>
@@ -408,6 +421,16 @@ desc: Agent général AXA et courtier : programmes d'assurance sur mesure et mé
         <div class="quote__mark">“</div>
         <p>Du constructeur à l'aéroclub, ils connaissent notre secteur. Les garanties correspondent à nos opérations réelles.</p>
         <figcaption class="quote__who"><i>M</i><div><b>Melissa P.</b><span>Gérante, aéronautique</span></div></figcaption>
+      </figure>
+      <figure class="quote">
+        <div class="quote__mark">“</div>
+        <p>Un programme négocié compagnie par compagnie, et un interlocuteur qui répond le jour même.</p>
+        <figcaption class="quote__who"><i>I</i><div><b>Isabelle T.</b><span>Directrice financière, recyclage</span></div></figcaption>
+      </figure>
+      <figure class="quote">
+        <div class="quote__mark">“</div>
+        <p>La décennale et le tous risques chantier enfin cohérents entre eux, sans doublon et sans trou de garantie.</p>
+        <figcaption class="quote__who"><i>T</i><div><b>Thomas G.</b><span>Gérant, BTP</span></div></figcaption>
       </figure>
     </div>
   </div>
@@ -430,7 +453,7 @@ desc: Agent général AXA et courtier : programmes d'assurance sur mesure et mé
       </div>
     </div>
     <div class="cta__card" data-reveal="right">
-      <div class="row"><span>Téléphone</span><a href="tel:+33561000000">05 61 00 00 00</a></div>
+      <div class="row"><span>Téléphone</span><a href="tel:+33531614280">05 31 61 42 80</a></div>
       <div class="row"><span>Email</span><a href="mailto:david.hubschwerlin@axa.fr">david.hubschwerlin@axa.fr</a></div>
       <div class="row"><span>Intervention</span><b class="serif" style="font-size:22px">Occitanie · France entière</b></div>
     </div>
