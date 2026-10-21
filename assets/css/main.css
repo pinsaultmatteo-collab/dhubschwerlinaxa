@@ -167,22 +167,6 @@ p+p{margin-top:1em}
 .loader__bar i{display:block;height:100%;width:100%;background:var(--gold);transform:scaleX(0);transform-origin:left}
 .loader.is-done{pointer-events:none}
 
-/* ---------- Cursor ---------- */
-.cursor{position:fixed;top:0;left:0;z-index:999;pointer-events:none;mix-blend-mode:difference}
-.cursor__dot{position:absolute;top:0;left:0;width:8px;height:8px;border-radius:50%;background:#fff;transform:translate(-50%,-50%)}
-.cursor__ring{
-  position:absolute;top:0;left:0;width:38px;height:38px;border-radius:50%;
-  border:1px solid rgba(255,255,255,.9);transform:translate(-50%,-50%);
-  display:grid;place-items:center;
-  transition:width .4s var(--ease),height .4s var(--ease),background .4s var(--ease),border-color .4s var(--ease);
-}
-.cursor__ring span{font-size:11px;font-weight:600;letter-spacing:.14em;text-transform:uppercase;color:#fff;opacity:0;transition:opacity .3s}
-.cursor.is-hover .cursor__ring{width:64px;height:64px;background:rgba(255,255,255,.12)}
-.cursor.is-view .cursor__ring{width:96px;height:96px;background:#fff;border-color:#fff}
-.cursor.is-view .cursor__ring span{opacity:1;color:#000;mix-blend-mode:normal}
-.cursor.is-view .cursor__dot{opacity:0}
-@media (hover:none),(pointer:coarse){.cursor{display:none}}
-
 /* ---------- Navigation ---------- */
 .nav{
   position:fixed;top:0;left:0;right:0;z-index:100;
@@ -868,7 +852,6 @@ body.menu-open .menu__links a:nth-child(6){transition-delay:.6s}
   .hero__title .w > span{transform:none}
   .manifesto__text .w{opacity:1}
   .loader{display:none}
-  .cursor{display:none}
 }
 
 

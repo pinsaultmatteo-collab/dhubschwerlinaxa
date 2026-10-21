@@ -66,7 +66,7 @@ articles.sort(key=lambda a: a["date"], reverse=True)
 def card(a, base, featured=False):
     cover = PARTIALS.get("cover-" + a.get("cover", ""), "")
     return (
-        f'<a class="post{" post--featured" if featured else ""}" href="{base}blog/{a["slug"]}.html" data-cat="{a["cat_slug"]}" data-cursor="Lire">\n'
+        f'<a class="post{" post--featured" if featured else ""}" href="{base}blog/{a["slug"]}.html" data-cat="{a["cat_slug"]}">\n'
         f'        <div class="post__cover cover"><span class="post__cat">{a["category"]}</span>{cover}</div>\n'
         f'        <div class="post__body">\n'
         f'          <div class="post__meta"><time datetime="{a["date"]}">{a["date_fr"]}</time><span>·</span><span>{a["read"]} de lecture</span></div>\n'

@@ -223,30 +223,6 @@
     }));
   }
 
-  /* ---------- Custom cursor ---------- */
-  const cursor = $('[data-cursor-el]');
-  if (cursor && finePointer && !reduce) {
-    const dot = $('.cursor__dot', cursor), ring = $('.cursor__ring', cursor), label = $('.cursor__ring span', cursor);
-    let mx = innerWidth / 2, my = innerHeight / 2, rx = mx, ry = my;
-    window.addEventListener('pointermove', (e) => { mx = e.clientX; my = e.clientY; }, { passive: true });
-    const tick = () => {
-      rx = lerp(rx, mx, 0.16); ry = lerp(ry, my, 0.16);
-      dot.style.transform = `translate(${mx}px,${my}px) translate(-50%,-50%)`;
-      ring.style.transform = `translate(${rx}px,${ry}px) translate(-50%,-50%)`;
-      requestAnimationFrame(tick);
-    };
-    tick();
-    const hoverSel = 'a, button, label, .acc__btn, .hlist__item, .risk__row, .seg, [data-hover]';
-    document.addEventListener('pointerover', (e) => {
-      const t = e.target.closest(hoverSel);
-      cursor.classList.toggle('is-hover', !!t);
-      const v = e.target.closest('[data-cursor]');
-      cursor.classList.toggle('is-view', !!v);
-      if (v && label) label.textContent = v.dataset.cursor;
-    });
-    document.addEventListener('pointerleave', () => cursor.classList.remove('is-hover', 'is-view'));
-  }
-
   /* ---------- Magnetic buttons ---------- */
   if (finePointer && !reduce) {
     $$('.btn, .pole__link i, .acc__plus').forEach((el) => {
