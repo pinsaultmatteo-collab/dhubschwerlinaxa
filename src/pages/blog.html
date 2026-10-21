@@ -1,0 +1,69 @@
+<!--meta
+title: Le journal : conseils patrimoine, entreprise et assurance · David Hubschwerlin
+desc: Pacte Dutreil, sinistralité des flottes, assurance emprunteur, assurance vie ou PER : les analyses de David Hubschwerlin, Agent Général AXA et courtier à Cazères.
+-->
+{{> head}}
+{{> nav}}
+
+<main>
+<!-- ================= HERO ================= -->
+<section class="hero hero--page dark" data-theme="dark">
+  <div class="hero__bg">
+    <div class="hero__grid"></div>
+    <div class="hero__glow"></div>
+  </div>
+  <div class="hero__art" aria-hidden="true">
+    {{> cover-journal}}
+  </div>
+  <div class="container hero__inner">
+    <div class="hero__copy">
+      <p class="eyebrow" data-reveal>Le journal</p>
+      <h1 class="hero__title" data-split>Conseils, analyses, <em>décryptages.</em></h1>
+      <p class="lead hero__lead" data-reveal>Patrimoine, entreprise, assurances du quotidien : ce que nous expliquons à nos clients, écrit noir sur blanc. Des articles de fond, sans jargon inutile, pour décider en connaissance de cause.</p>
+    </div>
+  </div>
+  <div class="hero__scroll" aria-hidden="true">Défiler <i></i></div>
+</section>
+
+<!-- ================= ARTICLES ================= -->
+<section class="section paper" data-theme="light" id="articles">
+  <div class="container">
+    <div class="filters" data-filters data-reveal>
+      <button class="filter is-active" type="button" data-filter="all">Tous les articles</button>
+      <button class="filter" type="button" data-filter="patrimoine">Patrimoine</button>
+      <button class="filter" type="button" data-filter="entreprise">Entreprise</button>
+      <button class="filter" type="button" data-filter="particuliers">Particuliers</button>
+    </div>
+    <div class="posts">
+      {{blog_cards}}
+    </div>
+  </div>
+</section>
+
+<!-- ================= CTA ================= -->
+<section class="section dark cta" data-theme="dark">
+  <svg class="cta__art" viewBox="0 0 600 600" aria-hidden="true" data-draw>
+    <circle cx="300" cy="300" r="280"/><circle cx="300" cy="300" r="200"/><circle cx="300" cy="300" r="120"/>
+    <line x1="300" y1="20" x2="300" y2="580"/><line x1="20" y1="300" x2="580" y2="300"/>
+    <polyline points="140,380 300,220 460,380"/><rect x="180" y="380" width="240" height="120"/>
+  </svg>
+  <div class="container cta__inner">
+    <div>
+      <p class="eyebrow" data-reveal>Une question ?</p>
+      <h2 data-reveal style="margin-top:18px">Un article ne remplace pas <em>un rendez-vous.</em></h2>
+      <p class="lead" data-reveal style="margin-top:26px;max-width:560px">Chaque situation est différente. Une heure d'échange pour appliquer ces principes à votre cas, sans engagement.</p>
+      <div class="btn-group" data-reveal style="margin-top:36px">
+        <a class="btn btn--gold" href="contact.html">Prendre rendez-vous <svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M2 8h11M9 4l4 4-4 4"/></svg></a>
+      </div>
+    </div>
+    <div class="cta__card" data-reveal="right">
+      <div class="row"><span>Téléphone</span><a href="tel:+33531614280">05 31 61 42 80</a></div>
+      <div class="row"><span>Email</span><a href="mailto:david.hubschwerlin@axa.fr">david.hubschwerlin@axa.fr</a></div>
+      <div class="row"><span>Agence</span><b class="serif" style="font-size:22px">32 av. Pasteur · 31220 Cazères</b></div>
+    </div>
+  </div>
+</section>
+</main>
+
+{{> footer}}
+{{> scripts}}

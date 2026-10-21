@@ -200,9 +200,12 @@
 
   // active link
   const here = location.pathname.split('/').pop() || 'index.html';
+  const inBlog = /\/blog\//.test(location.pathname);
   $$('.nav__links a, .menu__links a').forEach((a) => {
     const [page, hash] = a.getAttribute('href').split('#');
-    if (page === here && (!hash || location.hash === '#' + hash)) a.classList.add('is-active');
+    const file = page.split('/').pop();
+    const match = (file === here && (!hash || location.hash === '#' + hash)) || (inBlog && file === 'blog.html');
+    if (match) a.classList.add('is-active');
   });
 
   // mobile menu
@@ -626,6 +629,42 @@
     window.addEventListener('load', update);
     update();
   });
+
+  /* ---------- Blog : filtres par pôle ---------- */
+  $$('[data-filters]').forEach((root) => {
+    const chips = $$('.filter', root), posts = $$('.post', document);
+    chips.forEach((c) => c.addEventListener('click', () => {
+      chips.forEach((x) => x.classList.toggle('is-active', x === c));
+      const cat = c.dataset.filter;
+      posts.forEach((p) => p.classList.toggle('is-hidden', cat !== 'all' && p.dataset.cat !== cat));
+      setTimeout(() => hasST && ScrollTrigger.refresh(), 50);
+    }));
+  });
+
+  /* ---------- Article : sommaire, scrollspy, barre de lecture ---------- */
+  const article = $('.article');
+  if (article) {
+    const toc = $('.toc nav');
+    const heads = $$('h2[id]', article);
+    if (toc) toc.innerHTML = heads.map((h) => `<a href="#${h.id}">${h.textContent}</a>`).join('');
+    const links = toc ? $$('a', toc) : [];
+    links.forEach((a) => a.addEventListener('click', (e) => { e.preventDefault(); const t = document.getElementById(a.getAttribute('href').slice(1)); if (t) scrollTo(t, -96); }));
+    const bar = $('.readbar i');
+    const spy = () => {
+      const vh = innerHeight;
+      let active = -1;
+      heads.forEach((h, i) => { if (h.getBoundingClientRect().top < vh * 0.32) active = i; });
+      links.forEach((a, i) => a.classList.toggle('is-active', i === active));
+      if (bar) {
+        const r = article.getBoundingClientRect();
+        const p = clamp((vh * 0.5 - r.top) / r.height, 0, 1);
+        bar.style.width = (p * 100).toFixed(2) + '%';
+      }
+    };
+    window.addEventListener('scroll', spy, { passive: true });
+    window.addEventListener('resize', spy);
+    spy();
+  }
 
   /* ---------- Form ---------- */
   $$('form[data-form]').forEach((form) => {

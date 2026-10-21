@@ -22,11 +22,16 @@ entreprise.html      Pôle Entreprise : positionnement assureur partenaire, sch�
 particuliers.html    Pôle Particuliers : approche, 6 assurances du quotidien (bento) + biens d'exception,
                      étapes, avis, contact
 contact.html         Formulaire, coordonnées, carte (32 av. Pasteur, Cazères), rendez-vous à domicile
+blog.html            Le journal : filtres par pôle, cartes d'articles (générées par build.py)
+blog/<slug>.html     Articles : hero + illustration, sommaire collant, barre de lecture, tableaux, « À retenir »,
+                     FAQ dépliable, encadré auteur, articles liés. JSON-LD BlogPosting + fil d'Ariane + FAQPage
+robots.txt           Généré par build.py (sitemap.xml aussi, dès que SITE_URL est renseigné)
 assets/css/main.css  Design system (tokens couleurs / typo / composants / responsive)
 assets/js/main.js    Animations : preloader, curseur, scroll fluide (Lenis), GSAP ScrollTrigger,
                      dessin des SVG au scroll, compteurs, section épinglée, accordéons, donut, etc.
 assets/img/          Portrait, favicon
-src/                 ← SOURCES : pages + partials (head, nav, footer, scripts)
+src/                 ← SOURCES : pages (dont pages/blog/) + partials (head, nav, footer, scripts,
+                     article-head, article-foot, cover-*)
 build.py             ← assemble src/ → racine (python3 build.py)
 vercel.json          Configuration Vercel (pas de build, en-têtes de cache et de sécurité)
 ```
@@ -35,6 +40,24 @@ Pour modifier le header, le footer ou les scripts : éditer `src/partials/*.html
 Pour modifier une page : éditer `src/pages/<page>.html` puis rebuild.
 
 > **Ne jamais éditer directement les `.html` de la racine** : ils sont régénérés et écrasés à chaque build.
+
+### Ajouter un article de blog
+
+1. Créer `src/pages/blog/<slug>.html` en copiant un article existant. Le bloc `<!--meta … -->` en tête
+   alimente tout le reste : `title` (balise title, ≤ 62 caractères), `desc` (meta description, ≤ 160),
+   `h1`, `card_title` (titre court des cartes), `chapo`, `excerpt`, `category` + `cat_slug`
+   (patrimoine / entreprise / particuliers), `date` (AAAA-MM-JJ) + `date_fr`, `cover` (nom d'une
+   illustration `src/partials/cover-<nom>.html`), `keywords`.
+2. Rédiger le contenu dans `<article class="article">` : des `<h2 id="…">` (ils forment le sommaire),
+   un encadré `.callout`, une `<section class="faq">` (ses questions sont reprises en JSON-LD FAQPage),
+   un `.article__cta`. Utiliser `{{base}}` devant les liens internes (`{{base}}contact.html`).
+3. Lancer `python3 build.py` : la carte apparaît automatiquement sur blog.html, sur l'accueil (3 derniers)
+   et dans « À lire aussi » des autres articles ; le temps de lecture est calculé.
+
+### Avant la mise en ligne : SITE_URL
+
+Dans `build.py`, renseigner `SITE_URL = "https://www.votre-domaine.fr"` (sans slash final) puis rebuild :
+cela active les balises canonical, og:url, les URL absolues du JSON-LD et génère `sitemap.xml`.
 
 ## Dépendances (CDN, aucune installation)
 
@@ -71,6 +94,9 @@ Le site fonctionne sans JS (contenu visible, sans animations) et respecte `prefe
 - [ ] **Formulaire** : actuellement sans backend (affiche un message de confirmation). Brancher sur Formspree,
       Netlify Forms, ou un script PHP `mail()` selon l'hébergeur.
 - [x] **Carte** : iframe Google Maps sur l'adresse de Cazères
+- [ ] **SITE_URL** dans `build.py` (canonical, og:url, sitemap.xml) : à renseigner dès que le domaine est connu
+- [ ] **Articles de blog** : 4 articles rédigés (Dutreil, sinistralité flotte, assurance emprunteur, assurance vie / PER).
+      Les règles fiscales et légales citées sont celles connues à la rédaction : à faire relire par David avant publication
 - [x] **Crédit PMC Marketing** en bas du footer : « Site conçu par » + logo (`assets/img/pmc-marketing.png` / `.webp`),
       lien vers https://www.agence-pmc-marketing.com/
 
